@@ -15,8 +15,16 @@ class Student(pg.sprite.Sprite):
         self.image = pg.image.load('graphics/student/Student2.png').convert_alpha()
         self.rect = self.image.get_rect(midbottom=(WIDTH / 2, HEIGHT - 10))
 
+    def move(self):
+        keys = pg.key.get_pressed()
+        if keys[pg.K_LEFT] and self.rect.left > 0:
+            self.rect.x -= 5
+        if keys[pg.K_RIGHT] and self.rect.right < WIDTH:
+            self.rect.x += 5
+
     def update(self):
-        ...
+        self.move()
+
 
 
 
