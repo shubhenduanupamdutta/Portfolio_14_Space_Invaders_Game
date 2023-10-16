@@ -12,10 +12,12 @@ FPS = 60
 class Student(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pg.Surface((30, 40))
-        self.image.fill(pg.Color('dodgerblue1'))
-        self.rect = self.image.get_rect(center=(320, 240))
-        self.speed = 5
+        self.image = pg.image.load('graphics/student/Student2.png').convert_alpha()
+        self.rect = self.image.get_rect(midbottom=(WIDTH / 2, HEIGHT - 10))
+
+    def update(self):
+        ...
+
 
 
 # Initializing pygame engine
@@ -42,8 +44,9 @@ start_time = 0
 bg_surface = pg.image.load('graphics/BACKGROUND.png').convert()
 
 # student
-student_surface = pg.image.load('graphics/student/Student2.png').convert_alpha()
-student_rect = student_surface.get_rect(midbottom=(WIDTH / 2, HEIGHT - 10))
+student = pg.sprite.GroupSingle()
+student.add(Student())
+
 
 # Running game loop
 while True:
@@ -56,7 +59,8 @@ while True:
     screen.blit(bg_surface, (0, 0))
 
     # Adding player to the game
-    screen.blit(student_surface, student_rect)
+    student.draw(screen)
+    student.update()
 
 
     # updating display
