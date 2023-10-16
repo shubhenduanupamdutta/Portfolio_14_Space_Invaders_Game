@@ -6,6 +6,7 @@ import pygame.event
 # CONSTANTS
 WIDTH = 800
 HEIGHT = 600
+FPS = 60
 
 
 class Student(pg.sprite.Sprite):
@@ -37,6 +38,12 @@ game_active = False
 score = 0
 start_time = 0
 
+# Screen Background
+bg_surface = pg.image.load('graphics/BACKGROUND.png').convert()
+
+# student
+student_surface = pg.image.load('graphics/student/Student2.png').convert_alpha()
+student_rect = student_surface.get_rect(midbottom=(WIDTH / 2, HEIGHT - 10))
 
 # Running game loop
 while True:
@@ -45,7 +52,16 @@ while True:
             pg.quit()
             quit()
 
+    # Adding background to the game
+    screen.blit(bg_surface, (0, 0))
+
+    # Adding player to the game
+    screen.blit(student_surface, student_rect)
 
 
+    # updating display
+    pg.display.update()
+    # maintaining fps
+    clock.tick(FPS)
 
 
