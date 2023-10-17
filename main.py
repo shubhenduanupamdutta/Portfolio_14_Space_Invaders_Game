@@ -57,9 +57,14 @@ class Assignments(pg.sprite.Sprite):
         self.image = pg.transform.rotozoom(self.image, 0, 0.5)
         self.x_pos = [WIDTH // 2 - i * 70 for i in [0, -1, 1, -2, 2, 3, -3]]
         self.rect = self.image.get_rect(midtop=(self.x_pos[number], 80))
+        self.initial_x_pos = self.x_pos[number]
+        self.move_by_pixels = 2
 
     def move(self):
-        self.rect.y += self.speed
+        if abs(self.rect.x - self.initial_x_pos) >= 200:
+            self.move_by_pixels *= -1
+        self.rect.x += self.move_by_pixels
+        # print(self.rect.x, self.initial_x_pos, self.move_by_pixels)
 
     def update(self):
         self.move()
@@ -95,7 +100,6 @@ solution_arrow = pg.sprite.GroupSingle(SolutionArrow())
 
 # Assignments Group
 assignments = pg.sprite.Group([Assignments(i) for i in range(7)])
-
 # Running game loop
 while True:
     for event in pg.event.get():
@@ -113,6 +117,7 @@ while True:
 
         # Adding Assignments to the game
         assignments.draw(screen)
+        assignments.update()
 
         # Adding solution arrow to the game
         solution_arrow.draw(screen)
