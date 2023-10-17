@@ -50,6 +50,20 @@ class SolutionArrow(pg.sprite.Sprite):
         self.reset()
 
 
+class Assignments(pg.sprite.Sprite):
+    def __init__(self, number):
+        super().__init__()
+        self.image = pg.image.load('graphics/assignment/Assignment_scroll.png').convert_alpha()
+        self.image = pg.transform.rotozoom(self.image, 0, 0.5)
+        self.x_pos = [WIDTH // 2 - i * 70 for i in [0, -1, 1, -2, 2, 3, -3]]
+        self.rect = self.image.get_rect(midtop=(self.x_pos[number], 80))
+
+    def move(self):
+        self.rect.y += self.speed
+
+    def update(self):
+        self.move()
+
 # Initializing pygame engine
 pg.init()
 
@@ -79,6 +93,9 @@ student = pg.sprite.GroupSingle(Student())
 # solution arrow
 solution_arrow = pg.sprite.GroupSingle(SolutionArrow())
 
+# Assignments Group
+assignments = pg.sprite.Group([Assignments(i) for i in range(7)])
+
 # Running game loop
 while True:
     for event in pg.event.get():
@@ -93,6 +110,9 @@ while True:
         # Adding player to the game
         student.draw(screen)
         student.update()
+
+        # Adding Assignments to the game
+        assignments.draw(screen)
 
         # Adding solution arrow to the game
         solution_arrow.draw(screen)
