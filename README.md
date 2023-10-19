@@ -4,4 +4,12 @@
 
 ### Description of Project:
  - #### Built using python and pygame
- - #### This is a simple space invaders game where the player has to shoot down the enemy ships before they reach the bottom of the screen
+ - #### Background is James Webb Telescope image by NASA.
+ - #### I customized the game to show student's life 😁
+ - #### There are assignments who drop questions.
+ - #### Student has to solve the assignments by shooting solution arrows
+ - #### If the student is hit by question he dies.
+
+### Version - 1 (Date : 19 October 2023)
+ - ##### No blocks (secure bunkers yet)
+ - ##### 
