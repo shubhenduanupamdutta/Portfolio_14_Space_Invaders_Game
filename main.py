@@ -35,9 +35,8 @@ class SolutionArrow(pg.sprite.Sprite):
         self.active = False
 
     def reset(self):
-        if self.rect.bottom < 0:
-            self.active = False
-            self.rect.midbottom = (WIDTH / 2, HEIGHT + 80)
+        self.active = False
+        self.rect.midbottom = (WIDTH / 2, HEIGHT + 80)
 
     def start_movement(self, x_pos):
         pg.key.get_pressed()
@@ -48,11 +47,7 @@ class SolutionArrow(pg.sprite.Sprite):
     def update(self, x_pos):
         self.start_movement(x_pos)
         if self.active: self.rect.y -= 5
-        self.reset()
-
-    def kill(self):
-        self.reset()
-        super().kill()
+        if self.rect.bottom < 0: self.reset()
 
 
 class Assignments(pg.sprite.Sprite):
@@ -202,12 +197,14 @@ while True:
         score.draw(screen)
         score.update()
 
-        # Detecting collisions
-        # collision between solution arrow and assignments
-        collided = pg.sprite.groupcollide(solution_arrow, assignments, False, True)
+        # if all assignments canned
         if len(assignments.sprites()) == 0:
             game_active = False
             continue
+
+        # Detecting collisions
+        # collision between solution arrow and assignments
+        collided = pg.sprite.spritecollide(solution_arrow.sprite, assignments, True)
         if len(collided) > 0:
             score.sprite.add_kill_point(KILL_POINTS)
             solution_arrow.sprite.reset()
