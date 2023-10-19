@@ -136,7 +136,7 @@ font_shaded = pg.font.Font("font/Action_Man_Shaded.ttf", 48)
 font_large_bold = pg.font.Font("font/Action_Man_Bold.ttf", 48)
 font_italic = pg.font.Font("font/Action_Man_Italic.ttf", 24)
 # Game Controls
-game_active = True
+game_active = False
 
 # Screen Background
 bg_surface = pg.image.load('graphics/BACKGROUND.png').convert()
@@ -205,6 +205,9 @@ while True:
         # Detecting collisions
         # collision between solution arrow and assignments
         collided = pg.sprite.groupcollide(solution_arrow, assignments, False, True)
+        if len(assignments.sprites()) == 0:
+            game_active = False
+            continue
         if len(collided) > 0:
             score.sprite.add_kill_point(KILL_POINTS)
             solution_arrow.sprite.reset()
@@ -219,6 +222,26 @@ while True:
         assignments = pg.sprite.Group([Assignments(i) for i in range(7)])
         questions.empty()
         student.sprite.rect.centerx = WIDTH // 2
+
+        # game start screen
+        title_text = font_large_bold.render("Student's Life", False, (255, 255, 255))
+        title_text_rect = title_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100))
+        screen.blit(title_text, title_text_rect)
+
+        if score.sprite.score == 0:
+            play_instruction = font_large.render("Left and Right keys to play", True, (255, 255, 255))
+            play_instruction_rect = play_instruction.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+            screen.blit(play_instruction, play_instruction_rect)
+        else:
+            score_text = font_large_bold.render(f"Score: {score.sprite.score + score.sprite.kill_points}", False, (255, 255, 255))
+            score_text_rect = score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+            screen.blit(score_text, score_text_rect)
+
+        start_instruction = font_normal.render("Press Space to start", False, (255, 255, 255))
+        start_instruction_rect = start_instruction.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 100))
+        screen.blit(start_instruction, start_instruction_rect)
+
+
 
 
 
